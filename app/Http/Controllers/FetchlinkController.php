@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\r;
 use Illuminate\Http\Request;
+use OpenGraph;
 
 class FetchlinkController extends Controller
 {
@@ -16,7 +17,14 @@ class FetchlinkController extends Controller
     {
         
         $key = $request->value;
-        echo $key;
+        $data = OpenGraph::fetch(strval($key), true);
+        //dd(gettype($data));
+        dd($data);
+        $title = $data['title'];
+        $image = $data['image'];
+        $model = $data['model'];
+        //dd($title);
+        return view('welcome')->with(compact('title', 'image', 'model'));
     }
 
     public function link($key){
